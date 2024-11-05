@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from scipy.io import loadmat
 
-from impl.toolbox import conv_tri, grad2
+from .impl.toolbox import conv_tri, grad2
 from ctypes import *
 
 
@@ -13,7 +13,7 @@ from ctypes import *
 #    ** Such slight differences (11e-8 - 9e-8 = 2e-8) in precision **
 #    ** would lead to very different results (`out = 0` in C and `out = edge` in python). **
 #    Sadly, C implementation is not expected but needed :(
-solver = cdll.LoadLibrary("cxx/lib/solve_csa.so")
+solver = cdll.LoadLibrary(os.path.join(os.path.dirname(__file__), "cxx/lib/solve_csa.so"))
 c_float_pointer = POINTER(c_float)
 solver.nms.argtypes = [c_float_pointer, c_float_pointer, c_float_pointer, c_int, c_int, c_float, c_int, c_int]
 
